@@ -1,0 +1,65 @@
+server:
+  port: 8081
+
+
+spring:
+  application:
+    name: myblog
+
+  #CONFIGURAZIONE DI CONNESIONE AL DB
+  datasource:
+    url: ${URL_DB}
+    username: ${USERNAME_DB}
+    password: ${PASS_DB}
+
+  #CONFIGURAZIONE JPA
+  jpa:
+    hibernate:
+      #Values:
+      #none: non fa nulla. Da usare in produzione
+      #create-drop: crea le tabella all'avvio dell'applicazione e fa un drop del DB alla chiusura. In fase di creazione delle tabelle
+      #update: crea sul DB le tabelle se non esistono, riporta solo ci� che � nuovo e non modifica ci� che � persistente
+      ddl-auto: update
+    properties:
+      dialect: org.hibernate.dialect.MySQLDialect
+    show-sql: true
+    open-in-view: false
+
+logging:
+  level:
+    it.cgmconsulting.myblog: info  #info mostra solo le informazioni di base, trace da moltissime informazioni, debug una via di mezzo
+    org:
+      springframework: info
+      hibernate.type.descriptor.sql.BasicBinder: trace
+      com.mailgun: trace
+
+# Enable/Disable spring-doc
+spring-doc:
+  swagger-ui:
+    enabled: true
+
+# CUSTOM PROPERTIES
+app:
+  # JWT Settings
+  jwtSecret: ${JWT_SECRET} #Parola chiave per codificare il jwt
+  jwtExpirationInSeconds: 36000
+  # Comma separated list of allowed origins , Le chiamate effettuate dal nostro backend possono essere fatte da qualsiasi indirizzo IP
+  cors.allowedOrigins: \*
+
+  mail:
+    sender: ${SENDER}
+    apiKey: ${API_KEY}
+    domain: ${DOMAIN}
+
+  avatar:
+    size: 10240 #si esprime in byte
+    width: 100
+    height: 100
+    extensions: gif,jpg,jpeg,png #lo converte in automatico in un array di Stringhe separate dalla virgola
+
+  post:
+    path: ${PATH_IMG}
+    extensions: jpg,jpeg
+
+
+
